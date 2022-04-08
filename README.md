@@ -1,4 +1,4 @@
-### The Gane 
+### The Game 
 Blackjack is a casino card game that can be played against dealer. The purpose of the game is to get as close as possible to a total hand value of 21 without exceeding, also know as busting, your hand. 
 
 ### As a User:
