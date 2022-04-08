@@ -1,3 +1,22 @@
+// important variables
+let dealerHand = 0
+let playerHand = 0
+
+// buttons
+let hit = document.querySelector("#hit")
+let stand = document.querySelector("#stand")
+let newGame = document.querySelector("#new_game")
+
+hit.addEventListener("click", function click() {
+    hitMe()
+})
+stand.addEventListener("click", function click() {
+    // move to dealer and end game
+})
+newGame.addEventListener("click", function click() {
+    shuffle()
+})
+
 // creating card deck
 const suit = ["hearts", "spades", "clubs", "diamonds"]
 const value = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -30,19 +49,3 @@ function shuffle() {
     }
     return cardDeck
 }
-
-
-    // function readValues() {
-//     for (let l = 0; l < cardDeck.length; l++) {
-//         let weight = 10
-//         if (cardDeck.value == "J" || cardDeck.value == "Q" || cardDeck.value == "K") {
-//             weight = 10
-//         }
-//         else if (cardDeck.value == "A") {
-//             weight = 11
-//         }
-//         else {
-//             // weight = get boolean value of numbers
-//         }
-//     }
-// }
