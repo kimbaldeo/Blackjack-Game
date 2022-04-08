@@ -63,7 +63,7 @@ function dealCards() {
 // Moving to gameplay
 // Function for Hit Button
 function hitMe() {
-    playerHand(cardDeck.pop())
+    playerHand.push(cardDeck.pop())
     for (let i = 0; i < playerHand.length, i++) {
         playerHandSum = playerHandSum + i
     }
@@ -88,3 +88,18 @@ function readValues() {
         }
     }
 }
+
+// after player stands, dealer completes their turn
+function dealerPlay() {
+    for (let i = 0; i < dealerHand.length; i++) {
+        dealerHandSum = dealerHandSum + i
+    }
+        while (dealerHandSum < 17) {
+            dealerHand.push(cardDeck.pop())
+            for (let i = 0; i < dealerHand.length; i++) {
+                dealerHandSum = dealerHandSum + i
+            }
+        }
+        return dealerHandSum
+}
+
