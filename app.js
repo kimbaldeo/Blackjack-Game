@@ -64,7 +64,7 @@ function dealCards() {
 // Function for Hit Button
 function hitMe() {
     playerHand.push(cardDeck.pop())
-    for (let i = 0; i < playerHand.length, i++) {
+    for (let i = 0; i < playerHand.length; i++) {
         playerHandSum = playerHandSum + i
     }
     return playerHandSum
@@ -103,3 +103,15 @@ function dealerPlay() {
         return dealerHandSum
 }
 
+// win determination
+function pickWinner () {
+    if (playerHandSum > dealerHandSum) {
+        console.log("You Win!")
+    }
+    else if (playerHandSum < dealerHandSum) {
+        console.log("The House Wins!")
+    }
+    else {
+        console.log("Draw")
+    }
+}
