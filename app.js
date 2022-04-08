@@ -1,6 +1,10 @@
 // important variables
-let dealerHand = 0
-let playerHand = 0
+let dealerHand = []
+let dealerHandSum = 0
+let playerHand = []
+let playerHandSum = 0
+
+
 
 // buttons
 let hit = document.querySelector("#hit")
@@ -56,6 +60,13 @@ function dealCards() {
     return cardDeck.pop()
 }
 
+// Moving to gameplay
+// Function for Hit Button
 function hitMe() {
-    return cardDeck.pop()
+    playerHand(cardDeck.pop())
+    for (let i = 0; i < playerHand.length, i++) {
+        playerHandSum = playerHandSum + i
+    }
+    return playerHandSum
 }
+
