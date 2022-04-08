@@ -70,3 +70,21 @@ function hitMe() {
     return playerHandSum
 }
 
+// Giving cards value
+function readValues() {
+    for (let i = 0; i < cardDeck.length; i++) {
+        let weight = parseInt(value[i])
+        if (cardDeck.value == "J" || cardDeck.value == "Q" || cardDeck.value == "K") {
+            weight = 10
+        }
+        else if (cardDeck.value == "A") {
+            weight = 11
+        }
+        else if (cardDeck.value == "A") {
+            weight = 1
+        }
+        else {
+            weight == value[i]
+        }
+    }
+}
