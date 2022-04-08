@@ -49,3 +49,13 @@ function shuffle() {
     }
     return cardDeck
 }
+
+// dealing cards
+function dealCards() {
+    // deal 2 cards to each player
+    return cardDeck.pop()
+}
+
+function hitMe() {
+    return cardDeck.pop()
+}
