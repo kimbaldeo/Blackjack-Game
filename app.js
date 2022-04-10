@@ -1,4 +1,5 @@
 // important variables
+let playerTurn = true
 let dealerHand = []
 let dealerHandSum = 0
 let playerHand = []
@@ -31,8 +32,8 @@ function createDeck() {
     for (let i = 0; i < suit.length; i++) {
         for (let j = 0; j < value.length; j++) {
             const singleCard = {
-                Value: value[j],
-                Suit: suit[i],
+                value: value[j],
+                suit: suit[i],
             }
             cardDeck.push(singleCard)
         }
@@ -56,51 +57,69 @@ function shuffle() {
 
 // dealing cards
 function dealCards() {
-    // deal 2 cards to each player
-    return cardDeck.pop()
+    let firstCard = cardDeck.pop()
+    renderCard(firstCard)
+    playerHand.push(firstCard)
+    playerHand.push(cardDeck.pop())
+    dealerHand.push(cardDeck.pop())
+    playerHand.push(cardDeck.pop())
+    dealerHand.push(cardDeck.pop())
 }
+
+// rendering cards (https://devdojo.com/devdojo/create-a-deck-of-cards-in-javascript)
+function renderCard(card) {
+
+    for(let i=0; i < cardDeck.length; i++) {
+      div = document.createElement('div');
+      div.className = 'card';
+      let ascii_char
+      if(cardDeck[i].suit == "diamonds") {
+        ascii_char = "&diams;";
+      } 
+      else {
+        ascii_char = "&" + cardDeck[i].suit + ";";
+      }
+  
+      div.innerHTML = '<span class="number">' + cardDeck[i].value + '</span><span class="suit">' + ascii_char + '</span>';
+      document.body.appendChild(div);
+    }
+  
+  }
 
 // Moving to gameplay
 // Function for Hit Button
 function hitMe() {
-    playerHand.push(cardDeck.pop())
-    for (let i = 0; i < playerHand.length; i++) {
-        playerHandSum = playerHandSum + i
-    }
-    return playerHandSum
+    let card = cardDeck.pop()
+    playerHandSum += readValue(card)
+    // Check to see if busted
+    playerHand.push(card)
 }
 
 // Giving cards value
-function readValues() {
-    for (let i = 0; i < cardDeck.length; i++) {
-        let weight = parseInt(value[i])
-        if (cardDeck.value == "J" || cardDeck.value == "Q" || cardDeck.value == "K") {
-            weight = 10
-        }
-        else if (cardDeck.value == "A") {
-            weight = 11
-        }
-        else if (cardDeck.value == "A") {
-            weight = 1
-        }
-        else {
-            weight == value[i]
-        }
+function readValue(card) {
+    const cardValue = card.value
+    let weight = parseInt(value)
+    if (cardValue == "J" || cardValue == "Q" || cardValue == "K") {
+        weight = 10
     }
+    else if (cardValue == "A") {
+        weight = 11
+    }
+    else if (cardValue == "A") {
+        weight = 1
+    }
+    return weight
 }
 
 // after player stands, dealer completes their turn
 function dealerPlay() {
-    for (let i = 0; i < dealerHand.length; i++) {
-        dealerHandSum = dealerHandSum + i
-    }
         while (dealerHandSum < 17) {
+            let card = cardDeck.pop()
+            // Render Card into div here
+            dealerHandSum += readValue(card)
+            // Check if busted
             dealerHand.push(cardDeck.pop())
-            for (let i = 0; i < dealerHand.length; i++) {
-                dealerHandSum = dealerHandSum + i
-            }
         }
-        return dealerHandSum
 }
 
 // win determination
