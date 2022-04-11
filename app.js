@@ -6,7 +6,6 @@ let playerHand = []
 let playerHandSum = 0
 
 
-
 // buttons
 let hit = document.querySelector("#hit")
 let stand = document.querySelector("#stand")
@@ -16,11 +15,16 @@ hit.addEventListener("click", function click() {
     hitMe()
 })
 stand.addEventListener("click", function click() {
-    // move to dealer and end game
+    let playerTurn = false
+    dealerPlay()
+
 })
 newGame.addEventListener("click", function click() {
+    playerTurn = true
     shuffle()
+    dealCards()
 })
+
 
 // creating card deck
 const suit = ["hearts", "spades", "clubs", "diamonds"]
@@ -43,6 +47,7 @@ function createDeck() {
 
 createDeck()
 
+
 // shuffle cards - Fisher-Yates Shuffle (http://sedition.com/perl/javascript-fy.html)
 function shuffle() {
     for (let i = cardDeck.length - 1; i >= 0; i--) { // 52nd Card (51 index)
@@ -55,6 +60,7 @@ function shuffle() {
     return cardDeck
 }
 
+
 // dealing cards
 function dealCards() {
     let firstCard = cardDeck.pop()
@@ -66,9 +72,9 @@ function dealCards() {
     dealerHand.push(cardDeck.pop())
 }
 
+
 // rendering cards (https://devdojo.com/devdojo/create-a-deck-of-cards-in-javascript)
 function renderCard(card) {
-
     for(let i=0; i < cardDeck.length; i++) {
       div = document.createElement('div');
       div.className = 'card';
@@ -83,16 +89,38 @@ function renderCard(card) {
       div.innerHTML = '<span class="number">' + cardDeck[i].value + '</span><span class="suit">' + ascii_char + '</span>';
       document.body.appendChild(div);
     }
-  
-  }
+}
+
 
 // Moving to gameplay
 // Function for Hit Button
 function hitMe() {
-    let card = cardDeck.pop()
-    playerHandSum += readValue(card)
-    // Check to see if busted
-    playerHand.push(card)
+    if (playerTurn == true) {
+        let card = cardDeck.pop()
+        renderCard()
+        playerHandSum += readValue(card)
+        checkBust()
+        playerHand.push(card)
+    }
+    // if (playerTurn == false) {
+    //     let card = cardDeck.pop()
+    //     dealerHandSum += readValue(card)
+    //     checkBust()
+    //     dealerHand.push(card)
+    // }
+}
+
+function checkBust() {
+    if (playerTurn == true) {
+        if (playerHandSum > 21) {
+            console.log("The House Wins")
+        }
+    }
+    if (playerTurn == false) {
+        if (dealerHandSum > 21) {
+            console.log("")
+        }
+    }
 }
 
 // Giving cards value
@@ -115,22 +143,25 @@ function readValue(card) {
 function dealerPlay() {
         while (dealerHandSum < 17) {
             let card = cardDeck.pop()
-            // Render Card into div here
+            renderCard()
             dealerHandSum += readValue(card)
-            // Check if busted
+            checkBust()
             dealerHand.push(cardDeck.pop())
         }
+        pickWinner()
 }
 
 // win determination
 function pickWinner () {
-    if (playerHandSum > dealerHandSum) {
-        console.log("You Win!")
-    }
-    else if (playerHandSum < dealerHandSum) {
-        console.log("The House Wins!")
-    }
-    else {
-        console.log("Draw")
+    if (playerHandSum <= 21 && dealerHandSum <= 21) {
+        if (playerHandSum > dealerHandSum) {
+            console.log("You Win!")
+        }
+        else if (playerHandSum < dealerHandSum) {
+            console.log("The House Wins!")
+        }
+        else {
+            console.log("Draw")
+        }
     }
 }
