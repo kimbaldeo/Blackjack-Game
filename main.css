@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&display=swap');
+
 body {
     background-color: #286a35;
     color: #00092C;
@@ -8,21 +10,55 @@ h1 {
     text-align: center;
 }
 
+.gameboard {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rules {
+    width: 400px;
+    margin-top: 10%;
+    float: left;
+    font-size: 18px;
+    font-family: ;
+}
+
+.dealer {
+    height: 300px;
+    width: 400px;
+}
+
+.player {
+    height: 300px;
+    width: 400px;
+}
+
+.score {
+    font-size: 30px;
+}
+
+.buttons {
+    display: block;
+    align-items: center;
+}
+
 .card {
-  width:50px;
-  height:75px;
-  border:1px solid #151718;
+  width: 120px;
+  height: 180px;
+  border: 1px solid #151718;
   float:left;
-  margin-right:5px;
-  margin-bottom:5px;
-  border-radius:3px;
-  font-family:courier;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  font-family: 'Cormorant SC', serif;
   background-color: white;
 }
 
 span.number, span.suit{
-	width:100%;
-	display:block;
-	text-align:center;
-	padding-top:8px;
+	width: 100%;
+	display: block;
+	text-align: center;
+	padding-top: 8px;
+    font-size: 50px;
 }
