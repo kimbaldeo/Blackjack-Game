@@ -1,31 +1,3 @@
-// important variables
-let playerTurn = true
-let dealerHand = []
-let dealerHandSum = 0
-let playerHand = []
-let playerHandSum = 0
-
-
-// buttons
-let hit = document.querySelector("#hit")
-let stand = document.querySelector("#stand")
-let newGame = document.querySelector("#new_game")
-
-hit.addEventListener("click", function click() {
-    hitMe()
-})
-stand.addEventListener("click", function click() {
-    let playerTurn = false
-    dealerPlay()
-
-})
-newGame.addEventListener("click", function click() {
-    playerTurn = true
-    shuffle()
-    dealCards()
-})
-
-
 // creating card deck
 const suit = ["hearts", "spades", "clubs", "diamonds"]
 const value = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -33,6 +5,7 @@ const value = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 let cardDeck = new Array(); 
 
 function createDeck() {
+    cardDeck = []
     for (let i = 0; i < suit.length; i++) {
         for (let j = 0; j < value.length; j++) {
             const singleCard = {
@@ -44,8 +17,6 @@ function createDeck() {
     }
     return cardDeck;
 }
-
-createDeck()
 
 
 // shuffle cards - Fisher-Yates Shuffle (http://sedition.com/perl/javascript-fy.html)
@@ -61,62 +32,123 @@ function shuffle() {
 }
 
 
+// important variables
+let playerTurn = true
+let dealerHand = []
+let dealerHandSum = 0
+let playerHand = []
+let playerHandSum = 0
+
+// Card Rendering Divs
+const playerDiv = document.querySelector(".player")
+const dealerDiv = document.querySelector(".dealer")
+
+// buttons
+const hit = document.querySelector("#hit")
+const stand = document.querySelector("#stand")
+const newGame = document.querySelector("#new_game")
+
+hit.addEventListener("click", function click() {
+    hitMe()
+})
+stand.addEventListener("click", function click() {
+    let playerTurn = false
+    dealerPlay()
+})
+newGame.addEventListener("click", function click() {
+    resetGame()
+    createDeck()
+    shuffle()
+    setup()
+})
+
+function resetGame() {
+    playerHandSum = 0
+    dealerHandSum = 0
+    playerHand = []
+    dealerHand = []
+    playerTurn = true
+}
+
 // dealing cards
-function dealCards() {
-    let firstCard = cardDeck.pop()
-    renderCard(firstCard)
-    playerHand.push(firstCard)
-    playerHand.push(cardDeck.pop())
-    dealerHand.push(cardDeck.pop())
-    playerHand.push(cardDeck.pop())
-    dealerHand.push(cardDeck.pop())
+function setup() {
+    // Retrieve Cards From Deck
+    const playerFirstCard = cardDeck.pop()
+    const dealerFirstCard = cardDeck.pop()
+    const playerSecondCard = cardDeck.pop()
+    const dealerSecondCard = cardDeck.pop()
+
+    // Get Weight of Player's Cards and add to score
+    playerHandSum += readValue(playerFirstCard)
+    playerHandSum += readValue(playerSecondCard)
+
+    // Render Player Cards
+    renderCard(playerFirstCard, playerDiv)
+    renderCard(playerSecondCard, playerDiv)
+
+    // Add Cards to Player's Hand
+    playerHand.push(playerFirstCard)
+    playerHand.push(playerSecondCard)
+
+    // Get Weight of Dealer's Cards and add to score
+    dealerHandSum += readValue(dealerFirstCard)
+    dealerHandSum += readValue(dealerSecondCard)
+
+    // Render Dealer Cards
+    renderCard(dealerFirstCard, dealerDiv)
+    renderCard(dealerSecondCard, dealerDiv)
+
+    // Add Cards to Dealer's Hand
+    dealerHand.push(dealerFirstCard)
+    dealerHand.push(dealerSecondCard)
+
+    console.log(playerHand)
+    console.log(dealerHand)
 }
 
 
+
+
 // rendering cards (https://devdojo.com/devdojo/create-a-deck-of-cards-in-javascript)
-function renderCard(card) {
-    for(let i=0; i < cardDeck.length; i++) {
-      div = document.createElement('div');
-      div.className = 'card';
-      let ascii_char
-      if(cardDeck[i].suit == "diamonds") {
-        ascii_char = "&diams;";
-      } 
-      else {
-        ascii_char = "&" + cardDeck[i].suit + ";";
-      }
-  
-      div.innerHTML = '<span class="number">' + cardDeck[i].value + '</span><span class="suit">' + ascii_char + '</span>';
-      document.body.appendChild(div);
+function renderCard(card, div) {
+    const cardDiv = document.createElement('div');
+    cardDiv.className = 'card';
+    let ascii_char = "";
+    if(card.suit == "diamonds") {
+        ascii_char = "&diams;"
+    } 
+    else {
+        ascii_char = "&" + card.suit + ";"
     }
+    cardDiv.innerHTML = '<span class="number">' + card.value + '</span><span class="suit">' + ascii_char + '</span>'
+    div.appendChild(cardDiv)
 }
 
 
 // Moving to gameplay
 // Function for Hit Button
 function hitMe() {
-    if (playerTurn == true) {
-        let card = cardDeck.pop()
-        renderCard()
-        playerHandSum += readValue(card)
-        checkBust()
-        playerHand.push(card)
+    let cardToHitWith = cardDeck.pop()
+    if (playerTurn) {
+        renderCard(cardToHitWith, playerDiv)
+        playerHandSum += readValue(cardToHitWith)
+        playerHand.push(cardToHitWith)        
     }
-    // if (playerTurn == false) {
-    //     let card = cardDeck.pop()
-    //     dealerHandSum += readValue(card)
-    //     checkBust()
-    //     dealerHand.push(card)
-    // }
+    else {
+        renderCard(cardToHitWith, dealerDiv)
+        dealerHandSum += readValue(cardToHitWith)
+        dealerHand.push(cardToHitWith)
+    }
+    checkBust()
 }
 
 function checkBust() {
-    if (playerTurn == true) {
+    if (playerTurn) {
         if (playerHandSum > 21) {
             console.log("The House Wins")
         }
     }
-    if (playerTurn == false) {
+    else {
         if (dealerHandSum > 21) {
             console.log("")
         }
@@ -142,11 +174,10 @@ function readValue(card) {
 // after player stands, dealer completes their turn
 function dealerPlay() {
         while (dealerHandSum < 17) {
-            let card = cardDeck.pop()
             renderCard()
-            dealerHandSum += readValue(card)
+            dealerHandSum += readValue(playingCard)
             checkBust()
-            dealerHand.push(cardDeck.pop())
+            dealerHand.push(playingCard)
         }
         pickWinner()
 }
