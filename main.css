@@ -14,14 +14,13 @@ h1 {
     width: 60%;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .rules {
-    width: 400px;
-    margin-top: 10%;
-    float: left;
     font-size: 18px;
-    font-family: ;
 }
 
 .dealer {
@@ -39,7 +38,6 @@ h1 {
 }
 
 .buttons {
-    display: block;
     align-items: center;
 }
 

@@ -30,9 +30,6 @@ newGame.addEventListener("click", function click() {
     setup()
 })
 
-playerScore.innerHTML = playerHandSum
-dealerScore.innerHTML = dealerHandSum
-
 // creating card deck
 const suit = ["hearts", "spades", "clubs", "diamonds"]
 const value = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -68,11 +65,14 @@ function shuffle() {
 
 
 function resetGame() {
+    playerDiv.innerHTML = ""
+    dealerDiv.innerHTML = ""
     playerHandSum = 0
     dealerHandSum = 0
     playerHand = []
     dealerHand = []
     playerTurn = true
+
 }
 
 // dealing cards
@@ -107,11 +107,11 @@ function setup() {
     dealerHand.push(dealerFirstCard)
     dealerHand.push(dealerSecondCard)
 
+    playerScore.innerText = playerHandSum
+
     console.log(playerHand)
     console.log(dealerHand)
 }
-
-
 
 
 // rendering cards (https://devdojo.com/devdojo/create-a-deck-of-cards-in-javascript)
@@ -151,43 +151,39 @@ function readValue(card) {
 // Function for Hit Button
 function hitMe() {
     let cardToHitWith = cardDeck.pop()
-    if (playerTurn) {
-        renderCard(cardToHitWith, playerDiv)
-        playerHandSum += readValue(cardToHitWith)
-        playerHand.push(cardToHitWith)        
-    }
-    else {
-        renderCard(cardToHitWith, dealerDiv)
-        dealerHandSum += readValue(cardToHitWith)
-        dealerHand.push(cardToHitWith)
+    if (playerHandSum < 21) {
+        if (playerTurn) {
+            renderCard(cardToHitWith, playerDiv)
+            playerHandSum += readValue(cardToHitWith)
+            playerHand.push(cardToHitWith)
+            playerScore.innerText = playerHandSum
+        }
     }
     checkBust()
 }
 
+
 function checkBust() {
-    if (playerTurn) {
+    if (playerTurn = true) {
         if (playerHandSum > 21) {
             console.log("The House Wins")
-        }
-    }
-    else {
-        if (dealerHandSum > 21) {
-            console.log("")
         }
     }
 }
 
 // after player stands, dealer completes their turn
 function dealerPlay() {
-        while (dealerHandSum < 17) {
-            hitMe()
-            // renderCard()
-            // dealerHandSum += readValue(playingCard)
-            // checkBust()
-            // dealerHand.push(playingCard)
-        }
-        pickWinner()
+    dealerScore.innerText = dealerHandSum
+     while (dealerHandSum < 17) {
+        let dealerCard = cardDeck.pop()
+        renderCard(dealerCard, dealerDiv)
+        dealerHandSum += readValue(playingCard)
+        checkBust()
+        dealerHand.push(playingCard)
+    }
+    pickWinner()
 }
+
 
 // win determination
 function pickWinner () {
