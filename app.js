@@ -130,6 +130,23 @@ function renderCard(card, div) {
 }
 
 
+// Giving cards value
+function readValue(card) {
+    const cardValue = card.value
+    let weight = parseInt(cardValue)
+    if (cardValue == "J" || cardValue == "Q" || cardValue == "K") {
+        weight = 10
+    }
+    else if (cardValue == "A") {
+        weight = 11
+    }
+    // else if (cardValue == "A") {
+    //     weight = 1
+    // }
+    return weight
+}
+
+
 // Moving to gameplay
 // Function for Hit Button
 function hitMe() {
@@ -160,30 +177,14 @@ function checkBust() {
     }
 }
 
-// Giving cards value
-function readValue(card) {
-    const cardValue = card.value
-    let weight = parseInt(value)
-    if (cardValue == "J" || cardValue == "Q" || cardValue == "K") {
-        weight = 10
-    }
-    else if (cardValue == "A") {
-        weight = 11
-    }
-    else if (cardValue == "A") {
-        weight = 1
-    }
-    return weight
-}
-
-
 // after player stands, dealer completes their turn
 function dealerPlay() {
         while (dealerHandSum < 17) {
-            renderCard()
-            dealerHandSum += readValue(playingCard)
-            checkBust()
-            dealerHand.push(playingCard)
+            hitMe()
+            // renderCard()
+            // dealerHandSum += readValue(playingCard)
+            // checkBust()
+            // dealerHand.push(playingCard)
         }
         pickWinner()
 }
@@ -200,5 +201,14 @@ function pickWinner () {
         else {
             console.log("Draw")
         }
+    }
+    if (playerHandSum > 21 && dealerHandSum > 21) {
+        console.log("Draw - both over")
+    }
+    if (playerHandSum > 21 && dealerHandSum <=21) {
+        console.log("The House Wins, you're over")
+    }
+    if (playerHandSum <= 21 && dealerHandSum > 21) {
+        console.log("you win dealer over")
     }
 }
