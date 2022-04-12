@@ -10,6 +10,7 @@ const playerDiv = document.querySelector(".player")
 const dealerDiv = document.querySelector(".dealer")
 
 // pulling html elements
+// let image = document.querySelector("img")
 const hit = document.querySelector("#hit")
 const stand = document.querySelector("#stand")
 const newGame = document.querySelector("#new_game")
@@ -109,7 +110,7 @@ function setup() {
     dealerHand.push(dealerFirstCard)
     dealerHand.push(dealerSecondCard)
 
-    playerScore.innerText = playerHandSum
+    playerScore.innerText = `Player: ${playerHandSum}`
 
     console.log(playerHand)
     console.log(dealerHand)
@@ -158,7 +159,7 @@ function hitMe() {
             renderCard(cardToHitWith, playerDiv)
             playerHandSum += readValue(cardToHitWith)
             playerHand.push(cardToHitWith)
-            playerScore.innerText = playerHandSum
+            playerScore.innerText = `Player: ${playerHandSum}`
         }
     }
     checkBust()
@@ -175,7 +176,7 @@ function checkBust() {
 
 // after player stands, dealer completes their turn
 function dealerPlay() {
-    dealerScore.innerText = dealerHandSum
+    dealerScore.innerText = `Dealer: ${dealerHandSum}`
      while (dealerHandSum < 18) {
         let dealerCard = cardDeck.pop()
         renderCard(dealerCard, dealerDiv)
@@ -183,7 +184,7 @@ function dealerPlay() {
         dealerHand.push(dealerCard)
     }
     pickWinner()
-    dealerScore.innerText = dealerHandSum
+    dealerScore.innerText = `Dealer: ${dealerHandSum}`
 }
 
 
