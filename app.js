@@ -10,7 +10,7 @@ const playerDiv = document.querySelector(".player")
 const dealerDiv = document.querySelector(".dealer")
 
 // pulling html elements
-// let image = document.querySelector("img")
+let image = document.querySelector("img")
 const hit = document.querySelector("#hit")
 const stand = document.querySelector("#stand")
 const newGame = document.querySelector("#new_game")
@@ -26,6 +26,7 @@ stand.addEventListener("click", function click() {
     dealerPlay()
 })
 newGame.addEventListener("click", function click() {
+    image.remove()
     resetGame()
     createDeck()
     shuffle()
