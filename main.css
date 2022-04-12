@@ -15,11 +15,6 @@ h1 {
     margin-bottom: 5px;
 }
 
-img {
-    margin-left: 38%;
-    margin-bottom: 0;
-}
-
 .announce {
     text-align: center;
     font-size: 33px;
@@ -28,10 +23,16 @@ img {
     margin-bottom: 0px;
 }
 
+/* img {
+    /* margin-left: 35%;
+    justify-content: center;
+} */
+
 .gameboard {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    margin: 1%;
 }
 
 .rules {
@@ -44,31 +45,44 @@ img {
 }
 
 .dealer {
-    height: 400px;
-    width: 550px;
+    height: 100%;
+    width: 100%;
+    padding-right: 3%;
     display: flex;
-    align-items: center;
-    justify-content: right;
+    float: right;
+    justify-content: space-around;
 }
 
 .player {
-    height: 400px;
-    width: 550px;    
+    height: 100%;
+    width: 100%;    
+    padding-left: 3%;
     display: flex;
-    align-items: center;
-    justify-content: right;
+    float: left;
+    justify-content: space-around;
 }
 
 .score {
     font-size: 25px;
     color: white;
-}
-
-.buttons {
-    margin-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 1%
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#player_score {
+    margin-left: 3%;
+}
+
+#dealer_score {
+    margin-right: 3%;
 }
 
 #hit {
@@ -101,7 +115,7 @@ img {
   width: 120px;
   height: 180px;
   border: 2px solid #151718;
-  float:left;
+  float:inherit;
   margin-right: 5px;
   margin-bottom: 5px;
   border-radius: 3px;

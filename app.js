@@ -10,14 +10,18 @@ let isGameOver = false
 const playerDiv = document.querySelector(".player")
 const dealerDiv = document.querySelector(".dealer")
 
+playerDiv.style.display = 'none'
+dealerDiv.style.display = 'none'
+
 // pulling html elements
-let image = document.querySelector("img")
+const image = document.querySelector("img")
 const hit = document.querySelector("#hit")
 const stand = document.querySelector("#stand")
 const newGame = document.querySelector("#new_game")
-let playerScore = document.querySelector("#player_score")
-let dealerScore = document.querySelector("#dealer_score")
-let announce = document.querySelector(".announce")
+const playerScore = document.querySelector("#player_score")
+const dealerScore = document.querySelector("#dealer_score")
+const announce = document.querySelector(".announce")
+const gameboard = document.querySelector(".gameboard")
 
 hit.addEventListener("click", function click() {
     if (isGameOver) {
@@ -34,6 +38,8 @@ stand.addEventListener("click", function click() {
 })
 newGame.addEventListener("click", function click() {
     image.remove()
+    playerDiv.style.display = 'inline-block'
+    dealerDiv.style.display = 'inline-block'
     resetGame()
     createDeck()
     shuffle()
@@ -97,8 +103,8 @@ function setup() {
     const dealerSecondCard = cardDeck.pop()
 
     // Get Weight of Player's Cards and add to score
-    playerHandSum += readValue(playerFirstCard)
-    playerHandSum += readValue(playerSecondCard)
+    playerHandSum += readValue(playerFirstCard, playerHandSum)
+    playerHandSum += readValue(playerSecondCard, playerHandSum)
 
     // Render Player Cards
     renderCard(playerFirstCard, playerDiv)
@@ -109,8 +115,8 @@ function setup() {
     playerHand.push(playerSecondCard)
 
     // Get Weight of Dealer's Cards and add to score
-    dealerHandSum += readValue(dealerFirstCard)
-    dealerHandSum += readValue(dealerSecondCard)
+    dealerHandSum += readValue(dealerFirstCard, dealerHandSum)
+    dealerHandSum += readValue(dealerSecondCard, dealerHandSum)
 
     // Render Dealer Cards
     renderCard(dealerFirstCard, dealerDiv)
@@ -141,28 +147,18 @@ function renderCard(card, div) {
 
 
 // Giving cards value
-function readValue(card) {
+function readValue(card, sum) {
     const cardValue = card.value
     let weight = parseInt(cardValue)
     if (cardValue == "J" || cardValue == "Q" || cardValue == "K") {
         weight = 10
     }
     else if (cardValue == "A") {
-        if (playerTurn) {
-            if (playerHandSum > 10) {
-                weight = 1
-            }
-            else {
-                weight = 11
-            }
+        if (sum > 10) {
+            weight = 1
         }
         else {
-            if (dealerHandSum > 10) {
-                weight = 1
-            }
-            else {
-                weight = 11
-            }
+            weight = 11
         }
     }
     return weight
@@ -175,7 +171,7 @@ function hitMe() {
     let cardToHitWith = cardDeck.pop()
     if (playerTurn) {
         renderCard(cardToHitWith, playerDiv)
-        playerHandSum += readValue(cardToHitWith)
+        playerHandSum += readValue(cardToHitWith, playerHandSum)
         playerHand.push(cardToHitWith)
     }
     playerHandSum = confirmBust(playerHand, playerHandSum)
@@ -189,7 +185,7 @@ function confirmBust(hand, sum) {
         let tempSum = 0
         for (let i = 0; i < hand.length; i++) {
             let card = hand[i]
-            tempSum += readValue(card)
+            tempSum += readValue(card, sum)
         }
         if (tempSum > 21) {
             if (playerTurn) {
@@ -212,11 +208,10 @@ function confirmBust(hand, sum) {
 
 // after player stands, dealer completes their turn
 function dealerPlay() {
-    dealerScore.innerText = `Dealer: ${dealerHandSum}`
      while (dealerHandSum < 18) {
         let dealerCard = cardDeck.pop()
         renderCard(dealerCard, dealerDiv)
-        dealerHandSum += readValue(dealerCard)
+        dealerHandSum += readValue(dealerCard, dealerHandSum)
         dealerHand.push(dealerCard)
         dealerHandSum = confirmBust(dealerHand, dealerHandSum)
     }
