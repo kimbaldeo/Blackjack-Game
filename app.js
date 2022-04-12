@@ -112,9 +112,6 @@ function setup() {
     dealerHand.push(dealerSecondCard)
 
     playerScore.innerText = `Player: ${playerHandSum}`
-
-    console.log(playerHand)
-    console.log(dealerHand)
 }
 
 
