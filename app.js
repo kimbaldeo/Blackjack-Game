@@ -20,7 +20,7 @@ hit.addEventListener("click", function click() {
     hitMe()
 })
 stand.addEventListener("click", function click() {
-    let playerTurn = false
+    playerTurn = false
     dealerPlay()
 })
 newGame.addEventListener("click", function click() {
@@ -67,12 +67,12 @@ function shuffle() {
 function resetGame() {
     playerDiv.innerHTML = ""
     dealerDiv.innerHTML = ""
+    dealerScore.innerText = ""
     playerHandSum = 0
     dealerHandSum = 0
     playerHand = []
     dealerHand = []
     playerTurn = true
-
 }
 
 // dealing cards
@@ -116,10 +116,10 @@ function setup() {
 
 // rendering cards (https://devdojo.com/devdojo/create-a-deck-of-cards-in-javascript)
 function renderCard(card, div) {
-    const cardDiv = document.createElement('div');
-    cardDiv.className = 'card';
-    let ascii_char = "";
-    if(card.suit == "diamonds") {
+    const cardDiv = document.createElement("div")
+    cardDiv.className = "card"
+    let ascii_char = ""
+    if (card.suit == "diamonds") {
         ascii_char = "&diams;"
     } 
     else {
@@ -164,7 +164,7 @@ function hitMe() {
 
 
 function checkBust() {
-    if (playerTurn = true) {
+    if (playerTurn) {
         if (playerHandSum > 21) {
             console.log("The House Wins")
         }
@@ -174,14 +174,14 @@ function checkBust() {
 // after player stands, dealer completes their turn
 function dealerPlay() {
     dealerScore.innerText = dealerHandSum
-     while (dealerHandSum < 17) {
+     while (dealerHandSum < 18) {
         let dealerCard = cardDeck.pop()
         renderCard(dealerCard, dealerDiv)
-        dealerHandSum += readValue(playingCard)
-        checkBust()
-        dealerHand.push(playingCard)
+        dealerHandSum += readValue(dealerCard)
+        dealerHand.push(dealerCard)
     }
     pickWinner()
+    dealerScore.innerText = dealerHandSum
 }
 
 
@@ -197,12 +197,6 @@ function pickWinner () {
         else {
             console.log("Draw")
         }
-    }
-    if (playerHandSum > 21 && dealerHandSum > 21) {
-        console.log("Draw - both over")
-    }
-    if (playerHandSum > 21 && dealerHandSum <=21) {
-        console.log("The House Wins, you're over")
     }
     if (playerHandSum <= 21 && dealerHandSum > 21) {
         console.log("you win dealer over")
