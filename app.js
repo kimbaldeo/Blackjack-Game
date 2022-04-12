@@ -4,6 +4,7 @@ let dealerHand = []
 let dealerHandSum = 0
 let playerHand = []
 let playerHandSum = 0
+let isGameOver = false
 
 // Card Rendering Divs
 const playerDiv = document.querySelector(".player")
@@ -19,9 +20,15 @@ let dealerScore = document.querySelector("#dealer_score")
 let announce = document.querySelector(".announce")
 
 hit.addEventListener("click", function click() {
+    if (isGameOver) {
+        return
+    }
     hitMe()
 })
 stand.addEventListener("click", function click() {
+    if (isGameOver) {
+        return
+    }
     playerTurn = false
     dealerPlay()
 })
@@ -77,7 +84,9 @@ function resetGame() {
     playerHand = []
     dealerHand = []
     playerTurn = true
+    isGameOver = false
 }
+
 
 // dealing cards
 function setup() {
@@ -139,11 +148,23 @@ function readValue(card) {
         weight = 10
     }
     else if (cardValue == "A") {
-        weight = 11
+        if (playerTurn) {
+            if (playerHandSum > 10) {
+                weight = 1
+            }
+            else {
+                weight = 11
+            }
+        }
+        else {
+            if (dealerHandSum > 10) {
+                weight = 1
+            }
+            else {
+                weight = 11
+            }
+        }
     }
-    // else if (cardValue == "A") {
-    //     weight = 1
-    // }
     return weight
 }
 
@@ -152,25 +173,42 @@ function readValue(card) {
 // Function for Hit Button
 function hitMe() {
     let cardToHitWith = cardDeck.pop()
-    if (playerHandSum < 21) {
-        if (playerTurn) {
-            renderCard(cardToHitWith, playerDiv)
-            playerHandSum += readValue(cardToHitWith)
-            playerHand.push(cardToHitWith)
-            playerScore.innerText = `Player: ${playerHandSum}`
-        }
-    }
-    checkBust()
-}
-
-
-function checkBust() {
     if (playerTurn) {
-        if (playerHandSum > 21) {
-            announce.innerText = "The House wins, you bust"
+        renderCard(cardToHitWith, playerDiv)
+        playerHandSum += readValue(cardToHitWith)
+        playerHand.push(cardToHitWith)
+    }
+    playerHandSum = confirmBust(playerHand, playerHandSum)
+    playerScore.innerText = `Player: ${playerHandSum}`
+}
+
+
+// function to check if bust and determine if Ace is 1 or 11
+function confirmBust(hand, sum) {
+    if (sum > 21) {
+        let tempSum = 0
+        for (let i = 0; i < hand.length; i++) {
+            let card = hand[i]
+            tempSum += readValue(card)
+        }
+        if (tempSum > 21) {
+            if (playerTurn) {
+                announce.innerText = "The House wins, you bust"
+                isGameOver = true
+            }
+            else {
+                announce.innerText = "You win, Dealer is bust"
+                isGameOver = true
+            }
+            return sum
+        }
+        else {
+            return tempSum
         }
     }
+    return sum
 }
+
 
 // after player stands, dealer completes their turn
 function dealerPlay() {
@@ -180,6 +218,7 @@ function dealerPlay() {
         renderCard(dealerCard, dealerDiv)
         dealerHandSum += readValue(dealerCard)
         dealerHand.push(dealerCard)
+        dealerHandSum = confirmBust(dealerHand, dealerHandSum)
     }
     pickWinner()
     dealerScore.innerText = `Dealer: ${dealerHandSum}`
@@ -188,6 +227,7 @@ function dealerPlay() {
 
 // win determination
 function pickWinner () {
+    isGameOver = true
     if (playerHandSum <= 21 && dealerHandSum <= 21) {
         if (playerHandSum > dealerHandSum) {
             announce.innerText = "You Win!"
