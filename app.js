@@ -15,6 +15,7 @@ const stand = document.querySelector("#stand")
 const newGame = document.querySelector("#new_game")
 let playerScore = document.querySelector("#player_score")
 let dealerScore = document.querySelector("#dealer_score")
+let announce = document.querySelector(".announce")
 
 hit.addEventListener("click", function click() {
     hitMe()
@@ -65,6 +66,7 @@ function shuffle() {
 
 
 function resetGame() {
+    announce.innerText = ""
     playerDiv.innerHTML = ""
     dealerDiv.innerHTML = ""
     dealerScore.innerText = ""
@@ -166,7 +168,7 @@ function hitMe() {
 function checkBust() {
     if (playerTurn) {
         if (playerHandSum > 21) {
-            console.log("The House Wins")
+            announce.innerText = "The House wins, you bust"
         }
     }
 }
@@ -189,16 +191,16 @@ function dealerPlay() {
 function pickWinner () {
     if (playerHandSum <= 21 && dealerHandSum <= 21) {
         if (playerHandSum > dealerHandSum) {
-            console.log("You Win!")
+            announce.innerText = "You Win!"
         }
         else if (playerHandSum < dealerHandSum) {
-            console.log("The House Wins!")
+            announce.innerText = "The House Wins!"
         }
         else {
-            console.log("Draw")
+            announce.innerText = "Draw"
         }
     }
     if (playerHandSum <= 21 && dealerHandSum > 21) {
-        console.log("you win dealer over")
+        announce.innerText = "You win, Dealer is bust"
     }
 }
