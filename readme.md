@@ -8,14 +8,14 @@ This implementation of Blackjack makes use of HTML, CSS and Javascript are used 
 
 ## Code Snippets 
 ### Game Setup
-[Imgur](https://i.imgur.com/GSkfgz7.png)
+![Imgur](https://i.imgur.com/GSkfgz7.png)
 
 ### Card Creation
-[Imgur](https://i.imgur.com/eANgoAq.png)
-[Imgur](https://i.imgur.com/l56qnte.png)
+![Imgur](https://i.imgur.com/eANgoAq.png)
+![Imgur](https://i.imgur.com/l56qnte.png)
 
 ### Ace Determination
-[Imgur](https://i.imgur.com/YISZ5uN.png)
+![Imgur](https://i.imgur.com/YISZ5uN.png)
 
 
 ## Game-play
