@@ -6,7 +6,7 @@ let playerHand = []
 let playerHandSum = 0
 let isGameOver = false
 
-// Card Rendering Divs
+// card rendering divs
 const playerDiv = document.querySelector(".player")
 const dealerDiv = document.querySelector(".dealer")
 
@@ -34,6 +34,7 @@ stand.addEventListener("click", function click() {
         return
     }
     playerTurn = false
+    renderDealerCards()
     dealerPlay()
 })
 newGame.addEventListener("click", function click() {
@@ -119,7 +120,7 @@ function setup() {
     dealerHandSum += readValue(dealerSecondCard, dealerHandSum)
 
     // Render Dealer Cards
-    renderCard(dealerFirstCard, dealerDiv)
+    hideDealerCard()
     renderCard(dealerSecondCard, dealerDiv)
 
     // Add Cards to Dealer's Hand
@@ -145,8 +146,24 @@ function renderCard(card, div) {
     div.appendChild(cardDiv)
 }
 
+function hideDealerCard() {
+    const cardDiv = document.createElement("div")
+    cardDiv.className = "card"
+    cardDiv.style.backgroundImage = "url('https://i.imgur.com/8eSbCu4.png')"
+    dealerDiv.appendChild(cardDiv)
+}
 
-// Giving cards value
+function renderDealerCards() {
+    while (dealerDiv.firstChild) {
+        dealerDiv.removeChild(dealerDiv.firstChild)
+    }
+    for (let i = 0; i < dealerHand.length; i++) {
+        const card = dealerHand[i]
+        renderCard(card, dealerDiv)
+    }
+}
+
+// giving cards value
 function readValue(card, sum) {
     const cardValue = card.value
     let weight = parseInt(cardValue)
@@ -164,9 +181,8 @@ function readValue(card, sum) {
     return weight
 }
 
-
-// Moving to gameplay
-// Function for Hit Button
+// moving to gameplay
+// function for Hit Button
 function hitMe() {
     let cardToHitWith = cardDeck.pop()
     if (playerTurn) {

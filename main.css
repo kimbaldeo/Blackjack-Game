@@ -23,11 +23,6 @@ h1 {
     margin-bottom: 0px;
 }
 
-/* img {
-    /* margin-left: 35%;
-    justify-content: center;
-} */
-
 .gameboard {
     display: flex;
     align-items: center;
@@ -121,6 +116,7 @@ h1 {
   border-radius: 3px;
   font-family: 'Cormorant SC', serif;
   background-color: white;
+  background-size: cover;
 }
 
 span.number, span.suit{
