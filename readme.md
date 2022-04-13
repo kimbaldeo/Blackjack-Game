@@ -6,6 +6,18 @@ Blackjack is a casino card game played against the Dealer. In this implementatio
 ### Technologies Used
 This implementation of Blackjack makes use of HTML, CSS and Javascript are used to create the main elements of the game structure and functionality. Ascii Code is in the rendering of the playing cards. 
 
+## Code Snippets 
+### Game Setup
+[Imgur](https://i.imgur.com/GSkfgz7.png)
+
+### Card Creation
+[Imgur](https://i.imgur.com/eANgoAq.png)
+[Imgur](https://i.imgur.com/l56qnte.png)
+
+### Ace Determination
+[Imgur](https://i.imgur.com/YISZ5uN.png)
+
+
 ## Game-play
 ![Imgur](https://i.imgur.com/eDRP6RF.png)
 ![Imgur](https://i.imgur.com/v6Oxi87.png)
