@@ -12,17 +12,6 @@ This implementation of Blackjack makes use of HTML, CSS and Javascript are used 
 ![Imgur](https://i.imgur.com/Dz2ChEQ.png)
 
 
-## Code Snippets 
-### Game Setup
-![Imgur](https://i.imgur.com/GSkfgz7.png)
-
-### Card Creation
-![Imgur](https://i.imgur.com/eANgoAq.png)
-![Imgur](https://i.imgur.com/l56qnte.png)
-
-### Ace Determination
-![Imgur](https://i.imgur.com/YISZ5uN.png)
-
 ### Play
 https://kimbaldeo.github.io/Project1_Blackjack/
 
